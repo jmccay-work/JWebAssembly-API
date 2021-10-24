@@ -31,4 +31,12 @@ class ReplacementForRuntime {
     public static void exit(int status) {
         // nothing
     }
+
+    /**
+     * Replacement for {@link Runtime#availableProcessors()}
+     */
+    @Replace( "java/lang/Runtime.availableProcessors()I" )
+    public static int availableProcessors() {
+        return 1;
+    }
 }
