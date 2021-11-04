@@ -27,10 +27,34 @@ import de.inetsoftware.jwebassembly.api.annotation.Replace;
 class ReplacementForSecurityManager {
 
     /**
+     * Replacement for static code.
+     */
+    @Replace( "java/lang/SecurityManager.<clinit>()V" )
+    private static void init() {
+        // nothing
+    }
+
+    /**
+     * Replacement for {@link SecurityManager#checkPermission(Permission)}
+     */
+    @Replace( "java/lang/SecurityManager.<init>()V" )
+    public ReplacementForSecurityManager() {
+        throw new SecurityException();
+    }
+
+    /**
      * Replacement for {@link SecurityManager#checkPermission(Permission)}
      */
     @Replace( "java/lang/SecurityManager.checkPermission(Ljava/security/Permission;)V" )
     public void checkPermission(Permission perm) {
         // nothing
+    }
+
+    /**
+     * Replacement for {@link SecurityManager#getClassContext()}
+     */
+    @Replace( "java/lang/SecurityManager.getClassContext()[Ljava/lang/Class;" )
+    protected Class[] getClassContext() {
+        return null;
     }
 }
