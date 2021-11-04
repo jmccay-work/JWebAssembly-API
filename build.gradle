@@ -26,12 +26,12 @@ dependencies {
         def modules = ['javafx-base', 'javafx-controls', 'javafx-graphics', 'javafx-media', 'javafx-web' ]
         for (String module : modules) {
             compileOnly 'org.openjfx:' + module + ':' + fxVersion + '.+:' + platform
-            testCompile 'org.openjfx:' + module + ':' + fxVersion + '.+:' + platform
+            testImplementation 'org.openjfx:' + module + ':' + fxVersion + '.+:' + platform
         }
     }
 
-    testCompile     'junit:junit:+'
-    testCompile     'org.ow2.asm:asm:+'
+    testImplementation     'junit:junit:+'
+    testImplementation     'org.ow2.asm:asm:+'
 }
 
 sourceSets {
