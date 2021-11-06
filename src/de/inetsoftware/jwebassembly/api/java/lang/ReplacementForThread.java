@@ -32,7 +32,7 @@ class ReplacementForThread {
     @Replace( "java/lang/Thread.currentThread()Ljava/lang/Thread;" )
     static Thread currentThread() {
         if( current == null ) {
-            new Thread( "main" );
+            current = new Thread( "main" );
         }
         return current;
     }
@@ -42,6 +42,14 @@ class ReplacementForThread {
      */
     @Replace( "java/lang/Thread.registerNatives()V" )
     static void registerNatives() {
+    }
+
+    /**
+     * Replacement for holdsLock().
+     */
+    @Replace( "java/lang/Thread.holdsLock(Ljava/lang/Object;)Z" )
+    public static boolean holdsLock(Object obj) {
+        return true;
     }
 
     /**

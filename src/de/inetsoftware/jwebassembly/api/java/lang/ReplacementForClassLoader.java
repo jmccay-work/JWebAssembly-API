@@ -31,4 +31,12 @@ class ReplacementForClassLoader {
     private static void registerNatives() {
         // nothing
     }
+
+    /**
+     * Replacement for getSystemClassLoader();
+     */
+    @Replace( "java/lang/ClassLoader.getSystemClassLoader()Ljava/lang/ClassLoader;" )
+    public static ClassLoader getSystemClassLoader() {
+        return null;
+    }
 }

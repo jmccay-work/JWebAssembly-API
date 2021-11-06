@@ -39,4 +39,20 @@ class ReplacementForThrowable {
     private static Throwable fillInStackTrace( Throwable this_ ) {
         return this_;
     }
+
+    /**
+     * Replacement for getStackTraceDepth()
+     */
+    @Replace( "java/lang/Throwable.getStackTraceDepth()I" )
+    private int getStackTraceDepth() {
+        return 0;
+    }
+
+    /**
+     * Replacement for getStackTraceElement(int)
+     */
+    @Replace( "java/lang/Throwable.getStackTraceElement(I)Ljava/lang/StackTraceElement;" )
+    StackTraceElement getStackTraceElement(int index) {
+        return null;
+    }
 }
