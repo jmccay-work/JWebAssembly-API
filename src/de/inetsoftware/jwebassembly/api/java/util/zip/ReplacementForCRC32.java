@@ -25,6 +25,14 @@ import de.inetsoftware.jwebassembly.api.annotation.Replace;
 class ReplacementForCRC32 {
 
     /**
+     * Replacement for static code.
+     */
+    @Replace( "java/util/zip/CRC32.<clinit>()V" )
+    private static void init() {
+        // nothing
+    }
+
+    /**
      * Replacement for CRC32.update(int, int)
      */
     @Replace( "java/util/zip/CRC32.update(II)I" )
