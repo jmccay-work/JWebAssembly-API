@@ -27,6 +27,13 @@ class ReplacementForThread {
     private static Thread current;
 
     /**
+     * Replacement for registerNatives().
+     */
+    @Replace( "java/lang/Thread.registerNatives()V" )
+    static void registerNatives() {
+    }
+
+    /**
      * Replacement for currentThread().
      */
     @Replace( "java/lang/Thread.currentThread()Ljava/lang/Thread;" )
@@ -38,10 +45,11 @@ class ReplacementForThread {
     }
 
     /**
-     * Replacement for registerNatives().
+     * Replacement for getContextClassLoader().
      */
-    @Replace( "java/lang/Thread.registerNatives()V" )
-    static void registerNatives() {
+    @Replace( "java/lang/Thread.getContextClassLoader()Ljava/lang/ClassLoader;" )
+    public ClassLoader getContextClassLoader() {
+        return null;
     }
 
     /**
