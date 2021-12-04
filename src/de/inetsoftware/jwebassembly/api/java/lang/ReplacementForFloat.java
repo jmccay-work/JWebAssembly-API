@@ -32,9 +32,7 @@ class ReplacementForFloat {
     @WasmTextCode( "local.get 0 " //
                     + "i32.reinterpret_f32 " //
                     + "return" )
-    static int floatToRawIntBits(float value) {
-        return 0; // for Java compiler
-    }
+    static native int floatToRawIntBits(float value);
 
     /**
      * Replacement for Float.intBitsToFloat(int)
@@ -43,7 +41,5 @@ class ReplacementForFloat {
     @WasmTextCode( "local.get 0 " //
                     + "f32.reinterpret_i32 " //
                     + "return" )
-    static float intBitsToFloat(int value) {
-        return 0; // for Java compiler
-    }
+    static native float intBitsToFloat(int value);
 }

@@ -36,9 +36,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.sin(D)D" )
     @Import( module = "Math", name = "sin" )
-    static double sin( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double sin( double x );
 
     /**
      * Replacement for {@link Math#cos(double)}
@@ -49,9 +47,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.cos(D)D" )
     @Import( module = "Math", name = "cos" )
-    static double cos( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double cos( double x );
 
     /**
      * Replacement for {@link Math#tan(double)}
@@ -62,9 +58,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.tan(D)D" )
     @Import( module = "Math", name = "tan" )
-    static double tan( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double tan( double x );
 
     /**
      * Replacement for {@link Math#asin(double)}
@@ -75,9 +69,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.asin(D)D" )
     @Import( module = "Math", name = "asin" )
-    static double asin( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double asin( double x );
 
     /**
      * Replacement for {@link Math#acos(double)}
@@ -88,9 +80,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.acos(D)D" )
     @Import( module = "Math", name = "acos" )
-    static double acos( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double acos( double x );
 
     /**
      * Replacement for {@link Math#atan(double)}
@@ -101,9 +91,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.atan(D)D" )
     @Import( module = "Math", name = "atan" )
-    static double atan( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double atan( double x );
 
     /**
      * Replacement for {@link Math#exp(double)}
@@ -114,9 +102,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.exp(D)D" )
     @Import( module = "Math", name = "exp" )
-    static double exp( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double exp( double x );
 
     /**
      * Replacement for {@link Math#log(double)}
@@ -127,9 +113,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.log(D)D" )
     @Import( module = "Math", name = "log" )
-    static double log( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double log( double x );
 
     /**
      * Replacement for {@link Math#log10(double)}
@@ -140,9 +124,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.log10(D)D" )
     @Import( module = "Math", name = "log10" )
-    static double log10( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double log10( double x );
 
     /**
      * Replacement for {@link Math#sqrt(double)}
@@ -155,9 +137,7 @@ class ReplacementForMath {
     @WasmTextCode( "local.get 0 " //
                     + "f64.sqrt " //
                     + "return" )
-    static double sqrt( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double sqrt( double x );
 
     /**
      * Replacement for {@link Math#cbrt(double)}
@@ -168,9 +148,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.cbrt(D)D" )
     @Import( module = "Math", name = "cbrt" )
-    static double cbrt( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double cbrt( double x );
 
     /**
      * Replacement for {@link Math#IEEEremainder(double,double)}
@@ -195,9 +173,7 @@ class ReplacementForMath {
     @WasmTextCode( "local.get 0 " //
                     + "f64.ceil " //
                     + "return" )
-    static double ceil( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double ceil( double x );
 
     /**
      * Replacement for {@link Math#floor(double)}
@@ -210,9 +186,7 @@ class ReplacementForMath {
     @WasmTextCode( "local.get 0 " //
                     + "f64.floor " //
                     + "return" )
-    static double floor( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double floor( double x );
 
     /**
      * Replacement for {@link Math#rint(double)}
@@ -225,9 +199,7 @@ class ReplacementForMath {
     @WasmTextCode( "local.get 0 " //
                     + "f64.nearest " //
                     + "return" )
-    static double rint( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double rint( double x );
 
     /**
      * Replacement for {@link Math#atan2(double, double)}
@@ -241,9 +213,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.atan2(DD)D" )
     @Import( module = "Math", name = "atan2" )
-    static double atan2( double y, double x ) {
-        return 0; // for Java compiler
-    }
+    static native double atan2( double y, double x );
 
     /**
      * Replacement for {@link Math#pow(double, double)}
@@ -254,9 +224,7 @@ class ReplacementForMath {
       */
     @Replace( "java/lang/Math.pow(DD)D" )
     @Import( module = "Math", name = "pow" )
-    static double pow( double a, double b ) {
-        return 0; // for Java compiler
-    }
+    static native double pow( double a, double b );
 
     /**
      * Replacement for {@link Math#random()}
@@ -265,9 +233,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.random()D" )
     @Import( module = "Math", name = "random" )
-    static double random() {
-        return 0; // for Java compiler
-    }
+    static native double random();
 
     /**
      * Replacement for {@link Math#abs(double)}
@@ -280,9 +246,7 @@ class ReplacementForMath {
     @WasmTextCode( "local.get 0 " //
                     + "f64.abs " //
                     + "return" )
-    static double abs( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double abs( double x );
 
     /**
      * Replacement for {@link Math#abs(float)}
@@ -295,9 +259,7 @@ class ReplacementForMath {
     @WasmTextCode( "local.get 0 " //
                     + "f32.abs " //
                     + "return" )
-    static float abs( float x ) {
-        return 0; // for Java compiler
-    }
+    static native float abs( float x );
 
     /**
      * Replacement for {@link Math#max(double,double)}
@@ -311,9 +273,7 @@ class ReplacementForMath {
                     + "local.get 1 " //
                     + "f64.max " //
                     + "return" )
-    static double max( double a, double b ) {
-        return 0; // for Java compiler
-    }
+    static native double max( double a, double b );
 
     /**
      * Replacement for {@link Math#max(float,float)}
@@ -327,9 +287,7 @@ class ReplacementForMath {
                     + "local.get 1 " //
                     + "f32.max " //
                     + "return" )
-    static float max( float a, float b ) {
-        return 0; // for Java compiler
-    }
+    static native float max( float a, float b );
 
     /**
      * Replacement for {@link Math#min(double,double)}
@@ -343,9 +301,7 @@ class ReplacementForMath {
                     + "local.get 1 " //
                     + "f64.min " //
                     + "return" )
-    static double min( double a, double b ) {
-        return 0; // for Java compiler
-    }
+    static native double min( double a, double b );
 
     /**
      * Replacement for {@link Math#min(float,float)}
@@ -359,9 +315,7 @@ class ReplacementForMath {
                     + "local.get 1 " //
                     + "f32.min " //
                     + "return" )
-    static float min( float a, float b ) {
-        return 0; // for Java compiler
-    }
+    static native float min( float a, float b );
 
     /**
      * Replacement for {@link Math#sinh(double)}
@@ -372,9 +326,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.sinh(D)D" )
     @Import( module = "Math", name = "sinh" )
-    static double sinh( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double sinh( double x );
 
     /**
      * Replacement for {@link Math#cosh(double)}
@@ -385,9 +337,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.cosh(D)D" )
     @Import( module = "Math", name = "cosh" )
-    static double cosh( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double cosh( double x );
 
     /**
      * Replacement for {@link Math#tanh(double)}
@@ -398,9 +348,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.tanh(D)D" )
     @Import( module = "Math", name = "tanh" )
-    static double tanh( double x ) {
-        return 0; // for Java compiler
-    }
+    static native double tanh( double x );
 
     /**
      * Replacement for {@link Math#hypot(double, double)}
@@ -413,9 +361,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.hypot(DD)D" )
     @Import( module = "Math", name = "hypot" )
-    static double hypot( double a, double b ) {
-        return 0; // for Java compiler
-    }
+    static native double hypot( double a, double b );
 
     /**
      * Replacement for {@link Math#expm1(double)}
@@ -426,9 +372,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.expm1(D)D" )
     @Import( module = "Math", name = "expm1" )
-    static double expm1( double a, double b ) {
-        return 0; // for Java compiler
-    }
+    static native double expm1( double a, double b );
 
     /**
      * Replacement for {@link Math#log1p(double)}
@@ -439,9 +383,7 @@ class ReplacementForMath {
      */
     @Replace( "java/lang/Math.log1p(D)D" )
     @Import( module = "Math", name = "log1p" )
-    static double log1p( double a, double b ) {
-        return 0; // for Java compiler
-    }
+    static native double log1p( double a, double b );
 
     /**
      * Replacement for {@link Math#copySign(double,double)}
@@ -455,9 +397,7 @@ class ReplacementForMath {
                     + "local.get 1 " //
                     + "f64.copysign " //
                     + "return" )
-    static double copySign( double a, double b ) {
-        return 0; // for Java compiler
-    }
+    static native double copySign( double a, double b );
 
     /**
      * Replacement for {@link Math#copySign(float,float)}
@@ -471,8 +411,6 @@ class ReplacementForMath {
                     + "local.get 1 " //
                     + "f32.copysign " //
                     + "return" )
-    static float copySign( float a, float b ) {
-        return 0; // for Java compiler
-    }
+    static native float copySign( float a, float b );
 
 }
