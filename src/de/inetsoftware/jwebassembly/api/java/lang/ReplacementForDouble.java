@@ -32,9 +32,7 @@ class ReplacementForDouble {
     @WasmTextCode( "local.get 0 " //
                     + "i64.reinterpret_f64 " //
                     + "return" )
-    static long doubleToRawLongBits(double value) {
-        return 0; // for Java compiler
-    }
+    static native long doubleToRawLongBits(double value);
 
     /**
      * Replacement for Double.longBitsToDouble(long)
@@ -43,7 +41,5 @@ class ReplacementForDouble {
     @WasmTextCode( "local.get 0 " //
                     + "f64.reinterpret_i64 " //
                     + "return" )
-    static double longBitsToDouble(long value) {
-        return 0; // for Java compiler
-    }
+    static native double longBitsToDouble(long value);
 }
