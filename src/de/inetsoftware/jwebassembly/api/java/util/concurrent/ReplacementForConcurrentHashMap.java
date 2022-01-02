@@ -29,4 +29,11 @@ import de.inetsoftware.jwebassembly.api.annotation.Replace;
 @Replace( "java/util/concurrent/ConcurrentHashMap" )
 public class ReplacementForConcurrentHashMap<K,V> extends HashMap<K, V> implements ConcurrentMap<K,V> {
 
+    public ReplacementForConcurrentHashMap() {
+        //nothing
+    }
+
+    public ReplacementForConcurrentHashMap(int initialCapacity, float loadFactor, int concurrencyLevel) {
+        super( initialCapacity, loadFactor );
+    }
 }
