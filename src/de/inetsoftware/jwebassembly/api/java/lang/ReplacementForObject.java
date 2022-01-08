@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Volker Berlin (i-net software)
+ * Copyright 2020 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,4 +47,28 @@ class ReplacementForObject {
     @Import( js="(val)=>Object.assign({},val)")
     @Replace( "java/lang/Object.clone()Ljava/lang/Object;" )
     private static native Object clone0();
+
+    /**
+     * Replacement for {@link Object#notify()}
+     */
+    @Replace( "java/lang/Object.notify()V" )
+    public final void notify0() {
+        // nothing
+    }
+
+    /**
+     * Replacement for {@link Object#notifyAll()}
+     */
+    @Replace( "java/lang/Object.notifyAll()V" )
+    public final void notifyAll0() {
+        // nothing
+    }
+
+    /**
+     * Replacement for {@link Object#wait(long)}
+     */
+    @Replace( "java/lang/Object.wait(J)V" )
+    public final void wait0(long timeout) {
+        // nothing
+    }
 }

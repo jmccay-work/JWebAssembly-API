@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Volker Berlin (i-net software)
+ * Copyright 2020 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,5 +90,13 @@ public class ReplacementForAccessController {
     @Replace( "java/security/AccessController.checkPermission(Ljava/security/Permission;)V" )
     public static void checkPermission(Permission perm) {
         // nothing, there is no security check in WASM
+    }
+
+    /**
+     * Replacement for getContext().
+     */
+    @Replace( "java/security/AccessController.getContext()Ljava/security/AccessControlContext;" )
+    public static ReplacementForAccessControlContext getContext() {
+        return new ReplacementForAccessControlContext();
     }
 }

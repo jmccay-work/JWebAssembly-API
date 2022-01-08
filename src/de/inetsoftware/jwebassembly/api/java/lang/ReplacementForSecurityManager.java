@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Volker Berlin (i-net software)
+ * Copyright 2021 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@ import de.inetsoftware.jwebassembly.api.annotation.Replace;
 
 /**
  * Replacement methods for the class java.lang.SecurityManager.
+ * 
+ * We does not want use a SecurityManager and we does not want compile all the classes that the SecurityManager need that we override it with a stub.
  * 
  * @author Volker Berlin
  */
@@ -56,5 +58,21 @@ class ReplacementForSecurityManager {
     @Replace( "java/lang/SecurityManager.getClassContext()[Ljava/lang/Class;" )
     protected Class[] getClassContext() {
         return null;
+    }
+
+    /**
+     * Replacement for {@link SecurityManager#checkAccess(Thread)}
+     */
+    @Replace( "java/lang/SecurityManager.checkAccess(Ljava/lang/Thread;)V" )
+    public void checkAccess(Thread t) {
+        // nothing
+    }
+
+    /**
+     * Replacement for {@link SecurityManager#checkAccess(ThreadGroup)}
+     */
+    @Replace( "java/lang/SecurityManager.checkAccess(Ljava/lang/ThreadGroup;)V" )
+    public void checkAccess(ThreadGroup g) {
+        // nothing
     }
 }

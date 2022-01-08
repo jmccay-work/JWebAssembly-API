@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Volker Berlin (i-net software)
+ * Copyright 2021 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,13 +22,7 @@ import de.inetsoftware.jwebassembly.api.annotation.Replace;
  *
  * @author Volker Berlin
  */
+@Replace( "java/security/AccessControlContext" )
 class ReplacementForAccessControlContext {
 
-    /**
-     * Replacement for getDebug().
-     */
-    @Replace( "java/security/AccessControlContext.getDebug()Lsun/security/util/Debug;" )
-    static Object getDebug() {
-        return null;
-    }
 }
