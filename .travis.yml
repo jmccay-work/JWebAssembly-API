@@ -16,6 +16,3 @@ deploy:
   on:
     repo: i-net-software/JWebAssembly-API
     tags: true
-
-after_deploy:
-  - gradle bintrayUpload
