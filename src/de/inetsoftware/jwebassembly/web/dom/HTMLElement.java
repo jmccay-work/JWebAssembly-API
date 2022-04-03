@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 - 2021 Volker Berlin (i-net software)
+ * Copyright 2019 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package de.inetsoftware.jwebassembly.web.dom;
+
+import de.inetsoftware.jwebassembly.web.event.EventListener;
 
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement
@@ -59,5 +61,15 @@ public class HTMLElement extends Element {
             default:
                 return (T)new HTMLElement( peer );
         }
+    }
+
+    /**
+     * https://developer.mozilla.org/de/docs/Web/API/GlobalEventHandlers/onclick
+     * 
+     * @param listener
+     *            the listener
+     */
+    public void onclick( EventListener listener ) {
+        addEventListener( "click", listener );
     }
 }

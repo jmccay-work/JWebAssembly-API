@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 - 2020 Volker Berlin (i-net software)
+ * Copyright 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.inetsoftware.jwebassembly.web.dom;
-
-import de.inetsoftware.jwebassembly.web.JSObject;
+package de.inetsoftware.jwebassembly.web.event;
 
 /**
- * https://developer.mozilla.org/en-US/docs/Web/API/EventTarget
+ * https://developer.mozilla.org/en-US/docs/Web/API/EventListener
  * 
  * @author Volker Berlin
  */
-public class EventTarget extends JSObject {
+public interface EventListener {
+
     /**
-     * Create a Java instance as wrapper of the JavaScript object.
-     * @param peer the native JavaScript object
+     * https://developer.mozilla.org/en-US/docs/Web/API/EventListener/handleEvent Handle the event
+     * 
+     * @param evt
+     *            the event
      */
-    EventTarget( Object peer ) {
-        super( peer );
-    }
+    public void handleEvent( Event evt );
 }

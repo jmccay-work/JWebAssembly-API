@@ -27,7 +27,7 @@ import de.inetsoftware.jwebassembly.api.annotation.Import;
 public class JSObject {
 
     /** module name for JavaScript helper of the web */
-    private final static String WEB = "Web";
+    protected final static String WEB = "Web";
 
     /**
      * Native object from JavaScript.

@@ -15,6 +15,8 @@
  */
 package de.inetsoftware.jwebassembly.web.dom;
 
+import de.inetsoftware.jwebassembly.web.event.EventTarget;
+
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/Node
  * 
