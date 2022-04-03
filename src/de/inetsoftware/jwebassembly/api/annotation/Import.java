@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Volker Berlin (i-net software)
+ * Copyright 2018 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,9 +45,16 @@ public @interface Import {
     String name() default "";
 
     /**
-     * The JavaScript replacement. If empty then there must be a same naming object in JavaScript.
+     * The JavaScript replacement. If empty then there must be a same naming object in JavaScript or another import declaration like WASI.
      * 
      * @return JavaScript replacement. This is the body of the function.
      */
     String js() default "";
+
+    /**
+     * Signatures of required callback methods. The callback methods will only exports if the this function is needed. This is different to the @Export annotation.
+     * @see Export
+     * @return the full Java method signature like "com/foo/Bar.method()V"
+     */
+    String[] callbacks() default "";
 }
