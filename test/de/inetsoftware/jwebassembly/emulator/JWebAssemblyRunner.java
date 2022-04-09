@@ -23,7 +23,7 @@ import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
 
 /**
- * A JUnit runner to run JWebEngine tests with the emulator
+ * A JUnit runner to run JWebAssembly tests with the emulator.
  *
  * @author Volker Berlin
  */
