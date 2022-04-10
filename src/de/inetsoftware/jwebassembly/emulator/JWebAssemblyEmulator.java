@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 - 2021 Volker Berlin (i-net software)
+ * Copyright 2020 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,12 @@
  */
 package de.inetsoftware.jwebassembly.emulator;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 
@@ -51,6 +54,33 @@ public class JWebAssemblyEmulator {
     }
 
     /**
+     * Launch the emulator only with command line arguments
+     * 
+     * @param args
+     *            the class and method that should be called
+     */
+    public static void main( String[] args ) {
+        if( args.length >= 2 ) {
+            try {
+                String className = args[0];
+                String methodName = args[1];
+                launch( null, "", () -> {
+                    Class<?> clazz = Class.forName( className );
+                    Method method = clazz.getDeclaredMethod( methodName );
+                    if( (method.getModifiers() & Modifier.STATIC) == 0 ) {
+                        throw new Exception( "Method must be static" );
+                    }
+                    return method.invoke( null );
+                } );
+                return;
+            } catch( Throwable th ) {
+                th.printStackTrace();
+            }
+        }
+        System.out.println( "Usage: java -javaagent:<path>/jwebassembly-api.jar de.inetsoftware.jwebassembly.emulator.JWebAssemblyEmulator <classname> <methodname>" );
+    }
+
+    /**
      * Start the emulator from a resource file, load the html page and call the given main method.
      * 
      * @param htmlPage
@@ -59,6 +89,18 @@ public class JWebAssemblyEmulator {
      *            the executable with the main function
      */
     public static void launchResource( @Nonnull String htmlPage, @Nonnull Runnable main ) {
+        launchResource( htmlPage, () -> {main.run();return null;} );
+    }
+
+    /**
+     * Start the emulator from a resource file, load the html page and call the given main method.
+     * 
+     * @param htmlPage
+     *             The resource of the html page that the WebAssembly contains.
+     * @param main
+     *            the executable with the main function
+     */
+    public static void launchResource( @Nonnull String htmlPage, @Nonnull Callable<?> main ) {
         URL resource = ClassLoader.getSystemResource( htmlPage );
         Objects.requireNonNull( resource, "Resource not found for: " + htmlPage );
         launch( resource.toString(), null, main );
@@ -73,6 +115,18 @@ public class JWebAssemblyEmulator {
      *            the executable with the main function
      */
     public static void launchURL( @Nonnull URL htmlPageURL, @Nonnull Runnable main ) {
+        launchURL( htmlPageURL, () -> {main.run();return null;} );
+    }
+
+    /**
+     * Start the emulator from a URL, load the html page and call the given main method.
+     * 
+     * @param htmlPageURL
+     *             The URL of the html page that the WebAssembly contains.
+     * @param main
+     *            the executable with the main function
+     */
+    public static void launchURL( @Nonnull URL htmlPageURL, @Nonnull Callable<?> main ) {
         Objects.requireNonNull( htmlPageURL, "URL of HTML page is null." );
         launch( htmlPageURL.toString(), null, main );
     }
@@ -87,6 +141,19 @@ public class JWebAssemblyEmulator {
      */
     public static void launchContent( @Nonnull String content, @Nonnull Runnable main ) {
         Objects.requireNonNull( content, "Content of HTML page is null." );
+        launch( null, content, () -> {main.run();return null;} );
+    }
+
+    /**
+     * Start the emulator from a URL, load the html page and call the given main method.
+     * 
+     * @param content
+     *             The content of the html page that the WebAssembly contains.
+     * @param main
+     *            the executable with the main function
+     */
+    public static void launchContent( @Nonnull String content, @Nonnull Callable<?> main ) {
+        Objects.requireNonNull( content, "Content of HTML page is null." );
         launch( null, content, main );
     }
 
@@ -100,7 +167,7 @@ public class JWebAssemblyEmulator {
      * @param main
      *            the executable with the main function
      */
-    private static void launch( String htmlPageURL, String content, @Nonnull Runnable main ) {
+    private static void launch( String htmlPageURL, String content, @Nonnull Callable<?> main ) {
         JavaFxApplication.url = htmlPageURL;
         JavaFxApplication.content = content;
         JavaFxApplication.main = main;
@@ -143,7 +210,7 @@ public class JWebAssemblyEmulator {
             }
         }
         if( JavaFxApplication.error != null ) {
-            throwAny( JavaFxApplication.error );
+            throw throwAny( JavaFxApplication.error );
         }
     }
 
@@ -162,7 +229,7 @@ public class JWebAssemblyEmulator {
      * @param <E> any Throwable
      * @throws E any Throwable
      */
-    static <E extends Throwable> void throwAny( Throwable e ) throws E {
+    static <E extends Throwable> E throwAny( Throwable e ) throws E {
         throw (E)e;
     }
 
@@ -177,7 +244,7 @@ public class JWebAssemblyEmulator {
 
         private static String    content;
 
-        private static Runnable  main;
+        private static Callable<?>  main;
 
         private static Stage     stage;
 
@@ -198,7 +265,7 @@ public class JWebAssemblyEmulator {
         static void registerScript( @Nonnull ImportAnnotation anno ) {
             if( wasmImports == null ) {
                 // A class with native code was loaded before launching, can occur with JUnit testing
-                JWebAssemblyEmulator.launch( url, content, () -> {} );
+                JWebAssemblyEmulator.launch( url, content, () -> {return null;} );
             }
             ANNOTATIONS.add( anno );
             if( !Platform.isFxApplicationThread() ) {
@@ -272,9 +339,10 @@ public class JWebAssemblyEmulator {
                         registerScript( anno );
                     }
                     try {
-                        main.run();
+                        main.call();
                     } catch( Throwable th ) {
                         error = th;
+                        th.printStackTrace();
                     }
                     //primaryStage.close();
                 }
