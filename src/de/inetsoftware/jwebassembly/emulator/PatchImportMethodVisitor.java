@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 - 2021 Volker Berlin (i-net software)
+ * Copyright 2020 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 package de.inetsoftware.jwebassembly.emulator;
 
 import static org.objectweb.asm.Opcodes.AASTORE;
-import static org.objectweb.asm.Opcodes.ALOAD;
+import static org.objectweb.asm.Opcodes.*;
 import static org.objectweb.asm.Opcodes.ANEWARRAY;
 import static org.objectweb.asm.Opcodes.ARETURN;
 import static org.objectweb.asm.Opcodes.BIPUSH;
@@ -84,17 +84,49 @@ class PatchImportMethodVisitor extends MethodVisitor {
         visitTypeInsn( ANEWARRAY, Type.getInternalName( Object.class ) );
 
         // assign the method parameters to the array
+        int off = 0;
         for( int i = 0; i < args.length; i++ ) {
             visitInsn( DUP ); // duplicate the reference to the array on the stack
             visitIntInsn( BIPUSH, i ); // array index
             Type arg = args[i];
-            int opcode;
             switch( arg.getSort() ) {
-                //TODO other types
+                case Type.BOOLEAN:
+                    visitVarInsn( ILOAD, i + off );
+                    visitMethodInsn( INVOKESTATIC, "java/lang/Boolean", "valueOf", "(D)Ljava/lang/Boolean;", false );
+                    break;
+                case Type.CHAR:
+                    visitVarInsn( ILOAD, i + off );
+                    visitMethodInsn( INVOKESTATIC, "java/lang/Character", "valueOf", "(D)Ljava/lang/Character;", false );
+                    break;
+                case Type.BYTE:
+                    visitVarInsn( ILOAD, i + off );
+                    visitMethodInsn( INVOKESTATIC, "java/lang/Byte", "valueOf", "(D)Ljava/lang/Byte;", false );
+                    break;
+                case Type.SHORT:
+                    visitVarInsn( ILOAD, i + off );
+                    visitMethodInsn( INVOKESTATIC, "java/lang/Short", "valueOf", "(D)Ljava/lang/Short;", false );
+                    break;
+                case Type.INT:
+                    visitVarInsn( ILOAD, i + off );
+                    visitMethodInsn( INVOKESTATIC, "java/lang/Integer", "valueOf", "(D)Ljava/lang/Integer;", false );
+                    break;
+                case Type.FLOAT:
+                    visitVarInsn( FLOAD, i + off );
+                    visitMethodInsn( INVOKESTATIC, "java/lang/Float", "valueOf", "(D)Ljava/lang/Float;", false );
+                    break;
+                case Type.LONG:
+                    visitVarInsn( LLOAD, i + off );
+                    visitMethodInsn( INVOKESTATIC, "java/lang/Long", "valueOf", "(D)Ljava/lang/Long;", false );
+                    off++;
+                    break;
+                case Type.DOUBLE:
+                    visitVarInsn( DLOAD, i + off );
+                    visitMethodInsn( INVOKESTATIC, "java/lang/Double", "valueOf", "(D)Ljava/lang/Double;", false );
+                    off++;
+                    break;
                 default:
-                    opcode = ALOAD;
+                    visitVarInsn( ALOAD, i + off );
             }
-            visitVarInsn( opcode, i );
             visitInsn( AASTORE );
         }
 
