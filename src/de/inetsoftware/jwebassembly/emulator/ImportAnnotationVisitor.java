@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Volker Berlin (i-net software)
+ * Copyright 2020 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package de.inetsoftware.jwebassembly.emulator;
 
 import static org.objectweb.asm.Opcodes.ASM7;
 
+import java.util.HashSet;
 import java.util.Map;
 
 import org.objectweb.asm.AnnotationVisitor;
@@ -56,6 +57,10 @@ class ImportAnnotationVisitor extends AnnotationVisitor {
      */
     @Override
     public void visit( String name, Object value ) {
+        if( name == null ) {
+            anno.callbacks.add( (String)value );
+            return;
+        }
         switch( name ) {
             case "module":
                 anno.module = (String)value;
@@ -67,5 +72,18 @@ class ImportAnnotationVisitor extends AnnotationVisitor {
                 anno.javaScript = (String)value;
                 break;
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AnnotationVisitor visitArray( String name ) {
+        switch( name ) {
+            case "callbacks":
+                anno.callbacks = new HashSet<>();
+                return this;
+        }
+        return null;
     }
 }

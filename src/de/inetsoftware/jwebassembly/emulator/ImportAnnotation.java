@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Volker Berlin (i-net software)
+ * Copyright 2020 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package de.inetsoftware.jwebassembly.emulator;
 
+import java.util.Set;
+
 /**
  * The values of a scanned import annotation.
  * 
@@ -27,4 +29,6 @@ class ImportAnnotation {
     String name;
 
     String javaScript;
+
+    Set<String> callbacks;
 }

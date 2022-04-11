@@ -18,7 +18,10 @@ package de.inetsoftware.jwebassembly.emulator;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,6 +34,9 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -280,7 +286,35 @@ public class JWebAssemblyEmulator {
             }
 
             webEngine.executeScript( "wasmImports." + anno.module + "." + anno.name + "=" + anno.javaScript );
-        }
+
+            if( anno.callbacks != null ) {
+                obj = wasmImports.getMember( "instance" );
+                if( "undefined".equals( obj ) ) {
+                    webEngine.executeScript( "wasmImports.instance = {}" );
+                    webEngine.executeScript( "wasmImports.instance.exports = {}" );
+                }
+                JSObject exports = (JSObject)webEngine.executeScript( "wasmImports.instance.exports" );
+                for( String callback : anno.callbacks ) {
+                    int idx1 = callback.indexOf( '.' );
+                    int idx2 = callback.indexOf( '(' );
+                    String name = callback.substring( idx1 + 1, idx2 );
+                    callbacks.put( name, callback );
+                    StringBuilder builder = new StringBuilder();
+                    builder.append( "wasmImports.instance.exports." ).append( name ).append( "=function(){" );
+                    builder.append( "const a=arguments[0];" );
+                    builder.append( "const b=arguments[1];" );
+                    builder.append( "const c=arguments[2];" );
+                    builder.append( "const d=arguments[3];" );
+                    builder.append( "const e=arguments[4];" );
+                    builder.append( "const f=arguments[5];" );
+                    builder.append( "const g=arguments[6];" );
+                    builder.append( "const h=arguments[7];" );
+                    builder.append( "wasmImports.instance.exports.callbacks.callback('" ).append( name ).append( "',a,b,c,d,e,f,g,h);}" ); // must match the parameter count from CallbackHandler.callback(...)
+                    webEngine.executeScript( builder.toString() );
+                }
+                exports.setMember( "callbacks", callbackHandler );
+            }
+       }
 
         /**
          * The bridge method for the WebAssembly import function into the JavaScript.
@@ -324,6 +358,13 @@ public class JWebAssemblyEmulator {
 
             // Get WebEngine via WebView
             webEngine = browser.getEngine();
+            webEngine.setOnAlert( event -> {
+                new Alert( Alert.AlertType.INFORMATION, event.getData() ).showAndWait();
+            } );
+            webEngine.setConfirmHandler( message -> {
+                Optional<ButtonType> response = new Alert( Alert.AlertType.CONFIRMATION, message ).showAndWait();
+                return response.isPresent() && response.get() == ButtonType.OK;
+            } );
             // https://stackoverflow.com/questions/41654573/java-fx-javascript
             Worker<Void> worker = webEngine.getLoadWorker();
             worker.stateProperty().addListener( ( obs, old, neww ) -> {
@@ -354,8 +395,9 @@ public class JWebAssemblyEmulator {
                 webEngine.load( url );
             }
 
-            VBox vBox = new VBox( browser );
-            Scene scene = new Scene( vBox );
+            StackPane root = new StackPane();
+            root.getChildren().add(browser);
+            Scene scene = new Scene( root );
 
             stage.setTitle( "JWebAssembly Emulator" );
             stage.setScene( scene );
@@ -363,4 +405,53 @@ public class JWebAssemblyEmulator {
         }
 
     }
+
+    /**
+     * Handler for callbacks from JavaScript
+     */
+    public static class CallbackHandler {
+
+        /**
+         * The callback. The parameter count must match the declaration in JavaScript
+         * @param methodName the method name that is called
+         */
+        public void callback( String methodName, Object arg1, Object arg2, Object arg3, Object arg4, Object arg5, Object arg6, Object arg7, Object arg8 ) throws Exception {
+            System.err.println( methodName + " " + arg1 + " " + arg2 + " " + arg3);
+            invoke( methodName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8 );
+        }
+
+        /**
+         * The callback
+         * @param methodName the method name that is called
+         * @param args the arguments as array
+         */
+        private void invoke( String methodName, Object... args ) throws Exception {
+            Object callback = callbacks.get( methodName );
+            Method callbackMethod;
+            if( callback instanceof String ) {
+                callbackMethod = null;
+                String signature = (String)callback;
+                int idx1 = signature.indexOf( '.' );
+                String className = signature.substring( 0, idx1 ).replace( '/', '.' );
+                Class<?> clazz = Class.forName( className );
+                for( Method method : clazz.getDeclaredMethods() ) {
+                    if( methodName.equals( method.getName() ) ) {
+                        callbackMethod = method;
+                        callbacks.put( methodName, callbackMethod );
+                        break;
+                    }
+                }
+            } else {
+                callbackMethod = (Method)callback;
+            }
+            callbackMethod.setAccessible( true );
+            int paramCount = callbackMethod.getParameterTypes().length;
+            args = Arrays.copyOf( args, paramCount );
+            callbackMethod.invoke( null, args );
+        }
+    }
+
+    private static CallbackHandler callbackHandler = new CallbackHandler();
+
+    private static HashMap<String,Object> callbacks = new HashMap<>();
 }
