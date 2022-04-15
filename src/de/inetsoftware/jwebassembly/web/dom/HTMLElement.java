@@ -15,10 +15,11 @@
  */
 package de.inetsoftware.jwebassembly.web.dom;
 
+import de.inetsoftware.jwebassembly.web.css.CSSStyleDeclaration;
 import de.inetsoftware.jwebassembly.web.event.EventListener;
 
 /**
- * https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement
+ * <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement">https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement</a>
  * 
  * @author Volker Berlin
  */
@@ -64,7 +65,14 @@ public class HTMLElement extends Element {
     }
 
     /**
-     * https://developer.mozilla.org/de/docs/Web/API/GlobalEventHandlers/onclick
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style">https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style</a>
+     */
+    public CSSStyleDeclaration getStyle() {
+        return new CSSStyleDeclaration( get( "style" ) );
+    }
+
+    /**
+     * <a href="https://developer.mozilla.org/de/docs/Web/API/GlobalEventHandlers/onclick">https://developer.mozilla.org/de/docs/Web/API/GlobalEventHandlers/onclick</a>
      * 
      * @param listener
      *            the listener

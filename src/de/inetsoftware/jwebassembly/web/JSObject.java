@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 - 2020 Volker Berlin (i-net software)
+ * Copyright 2019 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -107,7 +107,7 @@ public class JSObject {
      *            the value of the property
      */
     @Import( module = WEB, js = "(o,p,v)=>o[p]=v" )
-    private static native void set0( Object peer, @Nonnull DOMString propName, Object value );
+    private static native void set0( Object peer, @Nonnull DOMString propName, DOMString value );
 
     /**
      * Set the value of a property of this object.

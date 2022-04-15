@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 - 2021 Volker Berlin (i-net software)
+ * Copyright 2019 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 package de.inetsoftware.jwebassembly.web.dom;
 
 /**
- * https://developer.mozilla.org/en-US/docs/Web/API/Document
+ * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document">https://developer.mozilla.org/en-US/docs/Web/API/Document</a>
  * 
  * @author Volker Berlin
  */
@@ -33,7 +33,7 @@ public class Document extends Node {
     }
 
     /**
-     * https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement">https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement</a>
      * 
      * @param <T>
      *            the return type
@@ -46,7 +46,7 @@ public class Document extends Node {
     }
 
     /**
-     * https://developer.mozilla.org/en-US/docs/Web/API/Document/createTextNode
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/createTextNode">https://developer.mozilla.org/en-US/docs/Web/API/Document/createTextNode</a>
      * 
      * @param data
      *            the text data
@@ -57,15 +57,24 @@ public class Document extends Node {
     }
 
     /**
-     * https://developer.mozilla.org/en-US/docs/Web/API/Document/body
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/body">https://developer.mozilla.org/en-US/docs/Web/API/Document/body</a>
      * 
      * @return the body
      */
-    public Node body() {
+    public HTMLElement body() {
         Object obj = get( "body" );
         if( obj == null ) {
             return null;
         }
-        return new Node( obj );
+        return new HTMLElement( obj );
+    }
+
+    /**
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement">https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement</a>
+     * 
+     * @return the element of the root
+     */
+    public HTMLElement documentElement() {
+        return new HTMLElement( get( "documentElement" ) );
     }
 }
