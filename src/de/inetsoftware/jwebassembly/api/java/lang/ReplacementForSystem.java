@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 - 2021 Volker Berlin (i-net software)
+ * Copyright 2019 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,11 @@
  */
 package de.inetsoftware.jwebassembly.api.java.lang;
 
+import java.io.PrintStream;
+
 import de.inetsoftware.jwebassembly.api.annotation.Import;
 import de.inetsoftware.jwebassembly.api.annotation.Replace;
+import de.inetsoftware.jwebassembly.api.annotation.WasmTextCode;
 
 /**
  * Replacement methods for the class java.lang.System.
@@ -24,6 +27,27 @@ import de.inetsoftware.jwebassembly.api.annotation.Replace;
  * @author Volker Berlin
  */
 class ReplacementForSystem {
+
+    
+    /**
+     * Replacement for System.registerNatives()
+     */
+    //TODO @Replace( "java/lang/System.<clinit>()V" )
+    private static void init() {
+        JavaScriptConsole console = new JavaScriptConsole();
+        System.setOut( console );
+        System.setErr( console );
+    }
+
+    @Replace( "java/lang/System.setOut(Ljava/io/PrintStream;)V" )
+    @WasmTextCode( value = "local.get 0 " + //
+                    "global.set $java/lang/System.out" )
+    static native void setOut(PrintStream out);
+
+    @Replace( "java/lang/System.setErr(Ljava/io/PrintStream;)V" )
+    @WasmTextCode( value = "local.get 0 " + //
+                    "global.set $java/lang/System.err" )
+    static native void setErr( PrintStream err );
 
     /**
      * Replacement for System.registerNatives()

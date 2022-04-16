@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Volker Berlin (i-net software)
+ * Copyright 2020 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,10 @@
  */
 package de.inetsoftware.jwebassembly.api.java.lang;
 
+import java.net.URL;
+import java.util.Collections;
+import java.util.Enumeration;
+
 import de.inetsoftware.jwebassembly.api.annotation.Replace;
 
 /**
@@ -25,11 +29,35 @@ import de.inetsoftware.jwebassembly.api.annotation.Replace;
 class ReplacementForClassLoader {
 
     /**
+     * Replacement for static constructor();
+     */
+    @Replace( "java/lang/ClassLoader.<clinit>()V" )
+    private static void init() {
+        // nothing
+    }
+
+    /**
      * Replacement for registerNatives();
      */
     @Replace( "java/lang/ClassLoader.registerNatives()V" )
     private static void registerNatives() {
         // nothing
+    }
+
+    /**
+     * Replacement for getSystemResources(String);
+     */
+    @Replace( "java/lang/ClassLoader.getResources(Ljava/lang/String;)Ljava/util/Enumeration;" )
+    public Enumeration<URL> getResources(String name) {
+        return Collections.emptyEnumeration();
+    }
+
+    /**
+     * Replacement for getSystemResources(String);
+     */
+    @Replace( "java/lang/ClassLoader.getSystemResources(Ljava/lang/String;)Ljava/util/Enumeration;" )
+    public static Enumeration<URL> getSystemResources(String name) {
+        return Collections.emptyEnumeration();
     }
 
     /**
