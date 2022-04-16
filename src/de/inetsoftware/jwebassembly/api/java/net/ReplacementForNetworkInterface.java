@@ -15,6 +15,9 @@
  */
 package de.inetsoftware.jwebassembly.api.java.net;
 
+import java.net.NetworkInterface;
+import java.net.SocketException;
+
 import de.inetsoftware.jwebassembly.api.annotation.Replace;
 
 /**
@@ -38,5 +41,21 @@ public class ReplacementForNetworkInterface {
     @Replace( "java/net/NetworkInterface.init()V" )
     private static void init() {
         // nothing
+    }
+
+    /**
+     * Replacement for NetworkInterface.getByName(String)
+     */
+    @Replace( "java/net/NetworkInterface.getByName(Ljava/lang/String;)Ljava/net/NetworkInterface;" )
+    public static NetworkInterface getByName(String name) {
+        return null;
+    }
+
+    /**
+     * Replacement for NetworkInterface.getByIndex(int)
+     */
+    @Replace( "java/net/NetworkInterface.getByIndex(I)Ljava/net/NetworkInterface;" )
+    public static NetworkInterface getByIndex(int index) {
+        return null;
     }
 }
