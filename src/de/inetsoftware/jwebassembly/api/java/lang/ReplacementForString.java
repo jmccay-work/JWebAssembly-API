@@ -65,6 +65,40 @@ class ReplacementForString {
     }
 
     /**
+     * Convert a native String (JavaScript) to a character array and replace the characters in the given char[] object.
+     * 
+     * @param domStr
+     *            the native String (JavaScript)
+     * @param chars
+     *            the target container for the characters
+     */
+    @Import( module = "Web", name = "toChars", js = "(d,s)=>{" + //
+                    "var l=d.length;" + //
+                    "var a=new Array(l);" + //
+                    "for(var i=0;i<l;i++){a[i]=d.charCodeAt(i)}" + //
+                    "s[2]=Object.seal(a)}" )
+    private static native void toChars( Object domStr, char[] chars );
+
+    /**
+     * Convert the native string (JavaScript) into a Java String.
+     * 
+     * @param domStr
+     *            the native string
+     * @return the java string
+     */
+    @Replace( "de/inetsoftware/jwebassembly/web/JSObject.toJavaString(Ljava/lang/Object;)Ljava/lang/String;" )
+    private static String toJavaString( Object domStr ) {
+        // create a char arrays object
+        char[] chars = new char[0];
+        // inject the characters from the domStr
+        toChars( domStr, chars );
+        
+        String str = new String( chars );
+        //TODO cache the native string: str.domStr = domStr;
+        return str;
+    }
+
+    /**
      * Placeholder for existing public method.
      */
     native public char[] toCharArray();

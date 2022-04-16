@@ -96,6 +96,10 @@ public class JSObject {
         return get0( peer, domString( propName ) );
     }
 
+    protected String getStr( @Nonnull String propName ) {
+        return toJavaString( get0( peer, domString( propName ) ) );
+    }
+
     /**
      * Native set a JavaScript property value by name.
      * 
@@ -183,5 +187,17 @@ public class JSObject {
                 return str;
             }
         };
+    }
+
+    /**
+     * Convert the native string (JavaScript) into a Java String.
+     * 
+     * @param str
+     *            the native string
+     * @return the java string
+     */
+    public static String toJavaString( @Nonnull Object str ) {
+        // "str" is of type Object because any cast of an external type to any Java type would fail currently
+        return str.toString();
     }
 }

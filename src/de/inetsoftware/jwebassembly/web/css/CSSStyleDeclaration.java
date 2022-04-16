@@ -56,11 +56,27 @@ public class CSSStyleDeclaration extends JSObject {
     }
 
     /**
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-color">https://developer.mozilla.org/en-US/docs/Web/CSS/background-color</a>
+     * @return the current value
+     */
+    public String getBackgroundColor() {
+        return getStr( "background-color" );
+    }
+
+    /**
      * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/border">https://developer.mozilla.org/en-US/docs/Web/CSS/border</a>
      * @param value the value
      */
     public void setBorder( String value ) {
         set( "border", value );
+    }
+
+    /**
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/border">https://developer.mozilla.org/en-US/docs/Web/CSS/border</a>
+     * @return the current value
+     */
+    public String getBorder() {
+        return getStr( "border" );
     }
 
     /**
@@ -72,11 +88,27 @@ public class CSSStyleDeclaration extends JSObject {
     }
 
     /**
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color">https://developer.mozilla.org/en-US/docs/Web/CSS/color</a>
+     * @return the current value
+     */
+    public String getColor() {
+        return getStr( "color" );
+    }
+
+    /**
      * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/display">https://developer.mozilla.org/en-US/docs/Web/CSS/display</a>
      * @param value the value
      */
     public void setDisplay( String value ) {
         set( "display", value );
+    }
+
+    /**
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/display">https://developer.mozilla.org/en-US/docs/Web/CSS/display</a>
+     * @return the current value
+     */
+    public String getDisplay() {
+        return getStr( "display" );
     }
 
     /**
@@ -89,12 +121,28 @@ public class CSSStyleDeclaration extends JSObject {
     }
 
     /**
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex">https://developer.mozilla.org/en-US/docs/Web/CSS/flex</a>
+     * @return the current value
+     */
+    public String getFlex() {
+        return getStr( "flex" );
+    }
+
+    /**
      * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction">https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction</a>
      * 
      * @param value the value
      */
     public void setFlexDirection( String value ) {
         set( "flex-direction", value );
+    }
+
+    /**
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction">https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction</a>
+     * @return the current value
+     */
+    public String getFlexDirection() {
+        return getStr( "flex-direction" );
     }
 
     /**
@@ -107,12 +155,28 @@ public class CSSStyleDeclaration extends JSObject {
     }
 
     /**
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap">https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap</a>
+     * @return the current value
+     */
+    public String getFlexWrap() {
+        return getStr( "flex-wrap" );
+    }
+
+    /**
      * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-size">https://developer.mozilla.org/en-US/docs/Web/CSS/font-size</a>
      * 
      * @param value the value
      */
     public void setFontSize( String value ) {
         set( "font-size", value );
+    }
+
+    /**
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-size">https://developer.mozilla.org/en-US/docs/Web/CSS/font-size</a>
+     * @return the current value
+     */
+    public String getFontSize() {
+        return getStr( "font-size" );
     }
 
     /**
@@ -125,12 +189,28 @@ public class CSSStyleDeclaration extends JSObject {
     }
 
     /**
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/height">https://developer.mozilla.org/en-US/docs/Web/CSS/height</a>
+     * @return the current value
+     */
+    public String getHeight() {
+        return getStr( "height" );
+    }
+
+    /**
      * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/padding">https://developer.mozilla.org/en-US/docs/Web/CSS/padding</a>
      * 
      * @param value the value
      */
     public void setPadding( String value ) {
         set( "padding", value );
+    }
+
+    /**
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/padding">https://developer.mozilla.org/en-US/docs/Web/CSS/padding</a>
+     * @return the current value
+     */
+    public String getPadding() {
+        return getStr( "padding" );
     }
 
     /**
@@ -143,11 +223,27 @@ public class CSSStyleDeclaration extends JSObject {
     }
 
     /**
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/text-align">https://developer.mozilla.org/en-US/docs/Web/CSS/text-align</a>
+     * @return the current value
+     */
+    public String getTextAlign() {
+        return getStr( "text-align" );
+    }
+
+    /**
      * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/width">https://developer.mozilla.org/en-US/docs/Web/CSS/width</a>
      * 
      * @param value the value
      */
     public void setWidth( String value ) {
         set( "width", value );
+    }
+
+    /**
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/width">https://developer.mozilla.org/en-US/docs/Web/CSS/width</a>
+     * @return the current value
+     */
+    public String getWidth() {
+        return getStr( "width" );
     }
 }
