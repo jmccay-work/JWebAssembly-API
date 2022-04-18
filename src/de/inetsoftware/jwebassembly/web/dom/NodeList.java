@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Volker Berlin (i-net software)
+ * Copyright 2021 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,6 @@
  */
 package de.inetsoftware.jwebassembly.web.dom;
 
-import de.inetsoftware.jwebassembly.api.annotation.Import;
-import de.inetsoftware.jwebassembly.web.DOMString;
 import de.inetsoftware.jwebassembly.web.JSObject;
 
 /**
@@ -42,7 +40,7 @@ public class NodeList extends JSObject {
      * @return the count
      */
     public int length() {
-        return get( "length" );
+        return getInt( "length" );
     }
 
     /**

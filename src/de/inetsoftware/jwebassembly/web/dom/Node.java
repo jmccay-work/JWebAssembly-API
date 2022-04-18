@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 - 2021 Volker Berlin (i-net software)
+ * Copyright 2019 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package de.inetsoftware.jwebassembly.web.dom;
 import de.inetsoftware.jwebassembly.web.event.EventTarget;
 
 /**
- * https://developer.mozilla.org/en-US/docs/Web/API/Node
+ * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node">https://developer.mozilla.org/en-US/docs/Web/API/Node</a>
  * 
  * @author Volker Berlin
  */
@@ -62,16 +62,16 @@ public class Node extends EventTarget {
     }
 
     /**
-     * https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType">https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType</a>
      * 
      * @return the node type
      */
     public int nodeType() {
-        return get( "nodeType" );
+        return getInt( "nodeType" );
     }
 
     /**
-     * https://developer.mozilla.org/en-US/docs/Web/API/Node/childNodes
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/childNodes">https://developer.mozilla.org/en-US/docs/Web/API/Node/childNodes</a>
      * 
      * @return list of chield nodes
      */
@@ -80,7 +80,7 @@ public class Node extends EventTarget {
     }
 
     /**
-     * https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild">https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild</a>
      * 
      * @param child
      *            the child

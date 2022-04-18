@@ -66,6 +66,7 @@ public class HTMLElement extends Element {
 
     /**
      * <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style">https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style</a>
+     * @return the style object
      */
     public CSSStyleDeclaration getStyle() {
         return new CSSStyleDeclaration( get( "style" ) );

@@ -34,7 +34,7 @@ public class Element extends Node {
 
     /**
      * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML">https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML</a>
-     * @return the tag name
+     * @param value the value
      */
     public void setInnerHTML( String value ) {
         set( "innerHTML", value );
