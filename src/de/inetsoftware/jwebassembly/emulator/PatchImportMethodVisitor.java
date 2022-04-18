@@ -143,15 +143,23 @@ class PatchImportMethodVisitor extends MethodVisitor {
             case Type.SHORT:
             case Type.BYTE:
             case Type.CHAR:
+                visitTypeInsn( CHECKCAST, "java/lang/Number" );
+                visitMethodInsn( INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I", false );
                 visitInsn( IRETURN );
                 break;
             case Type.LONG:
+                visitTypeInsn( CHECKCAST, "java/lang/Number" );
+                visitMethodInsn( INVOKEVIRTUAL, "java/lang/Number", "longValue", "()I", false );
                 visitInsn( LRETURN );
                 break;
             case Type.FLOAT:
+                visitTypeInsn( CHECKCAST, "java/lang/Number" );
+                visitMethodInsn( INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()I", false );
                 visitInsn( FRETURN );
                 break;
             case Type.DOUBLE:
+                visitTypeInsn( CHECKCAST, "java/lang/Number" );
+                visitMethodInsn( INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()I", false );
                 visitInsn( DRETURN );
                 break;
             default:
