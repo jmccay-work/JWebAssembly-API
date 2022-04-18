@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 - 2021 Volker Berlin (i-net software)
+ * Copyright 2019 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 package de.inetsoftware.jwebassembly.web.dom;
 
 /**
- * https://developer.mozilla.org/en-US/docs/Web/API/Element
+ * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">https://developer.mozilla.org/en-US/docs/Web/API/Element</a>
  * 
  * @author Volker Berlin
  */
@@ -33,10 +33,26 @@ public class Element extends Node {
     }
 
     /**
-     * https://developer.mozilla.org/en-US/docs/Web/API/Element/tagName
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML">https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML</a>
+     * @return the tag name
+     */
+    public void setInnerHTML( String value ) {
+        set( "innerHTML", value );
+    }
+
+    /**
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML">https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML</a>
+     * @return the tag name
+     */
+    public String getInnerHTML() {
+        return getStr( "innerHTML" );
+    }
+
+    /**
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/tagName">https://developer.mozilla.org/en-US/docs/Web/API/Element/tagName</a>
      * @return the tag name
      */
     public String tagName() {
-        return get( "tagName" );
+        return getStr( "tagName" );
     }
 }

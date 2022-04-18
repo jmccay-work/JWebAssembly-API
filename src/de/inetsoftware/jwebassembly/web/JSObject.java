@@ -84,6 +84,20 @@ public class JSObject {
     private static native <T> T get0( Object peer, DOMString propName );
 
     /**
+     * Native get a JavaScript property value by name.
+     * 
+     * @param <T>
+     *            the return type
+     * @param peer
+     *            the JavaScript object
+     * @param propName
+     *            the name of the property as DOMString
+     * @return the value of the property
+     */
+    @Import( module = WEB, js = "(o,p)=>o[p]" )
+    private static native int get1( Object peer, DOMString propName );
+
+    /**
      * Get the value of a property of this object.
      * 
      * @param <T>
@@ -96,8 +110,26 @@ public class JSObject {
         return get0( peer, domString( propName ) );
     }
 
+    /**
+     * Get the value of a property as Java String
+     * 
+     * @param propName
+     *            the name of the property
+     * @return the value of the property
+     */
     protected String getStr( @Nonnull String propName ) {
         return toJavaString( get0( peer, domString( propName ) ) );
+    }
+
+    /**
+     * Get the value of a property as prinitive int
+     * 
+     * @param propName
+     *            the name of the property
+     * @return the value of the property
+     */
+    protected int getInt( @Nonnull String propName ) {
+        return get1( peer, domString( propName ) );
     }
 
     /**
