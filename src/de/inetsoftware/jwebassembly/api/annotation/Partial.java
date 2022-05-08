@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Volker Berlin (i-net software)
+ * Copyright 2020 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Mark a class as an extension/partial of an existing class.
+ * Mark a class as an extension/partial of an existing class. This is more powerful as {@link Replace}.
+ * <ul>
+ * <li>Every method with the same signature will be replaced.
+ * <li>Native methods without a {@link WasmTextCode} annotation can be used as placeholder for invoking the method.
+ * <li>Static constructors (&lt;clinit&gt;) will not replaced by default. A separate {@link Replace} is required.
+ * </ul>
  * 
  * @author Volker Berlin
  *

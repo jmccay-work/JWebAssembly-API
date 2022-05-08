@@ -16,8 +16,10 @@
 package de.inetsoftware.jwebassembly.api.java.lang;
 
 import java.io.PrintStream;
+import java.util.Properties;
 
 import de.inetsoftware.jwebassembly.api.annotation.Import;
+import de.inetsoftware.jwebassembly.api.annotation.Partial;
 import de.inetsoftware.jwebassembly.api.annotation.Replace;
 import de.inetsoftware.jwebassembly.api.annotation.WasmTextCode;
 
@@ -26,25 +28,28 @@ import de.inetsoftware.jwebassembly.api.annotation.WasmTextCode;
  * 
  * @author Volker Berlin
  */
+@Partial( value = "java/lang/System" )
 class ReplacementForSystem {
 
-    
+    private static Properties props;
+
     /**
-     * Replacement for System.registerNatives()
+     * Replacement for static code.
      */
-    //TODO @Replace( "java/lang/System.<clinit>()V" )
+    @Replace( "java/lang/System.<clinit>()V" )
     private static void init() {
+        /*
         JavaScriptConsole console = new JavaScriptConsole();
         System.setOut( console );
         System.setErr( console );
+        */
+        props = new Properties();
     }
 
-    @Replace( "java/lang/System.setOut(Ljava/io/PrintStream;)V" )
     @WasmTextCode( value = "local.get 0 " + //
                     "global.set $java/lang/System.out" )
     static native void setOut(PrintStream out);
 
-    @Replace( "java/lang/System.setErr(Ljava/io/PrintStream;)V" )
     @WasmTextCode( value = "local.get 0 " + //
                     "global.set $java/lang/System.err" )
     static native void setErr( PrintStream err );
@@ -52,7 +57,6 @@ class ReplacementForSystem {
     /**
      * Replacement for System.registerNatives()
      */
-    @Replace( "java/lang/System.registerNatives()V" )
     private static void registerNatives() {
         // nothing
     }
@@ -60,14 +64,12 @@ class ReplacementForSystem {
     /**
      * Replacement for System.currentTimeMillis()
      */
-    @Replace( "java/lang/System.currentTimeMillis()J" )
     @Import( module = "System", name = "currentTimeMillis", js = "()=>BigInt(Date.now())")
     static native long currentTimeMillis();
 
     /**
      * Replacement for System.nanoTime()
      */
-    @Replace( "java/lang/System.nanoTime()J" )
     @Import( module = "System", name = "nanoTime", js = "()=>BigInt(Date.now()*1000000)")
     static native long nanoTime();
 
@@ -83,7 +85,6 @@ class ReplacementForSystem {
                     "for (var i=length-1;i>=0;i--)dest[i+destPos]=src[i+srcPos];" + //
                     "}" + //
                     "}" )
-    @Replace( "java/lang/System.arraycopy(Ljava/lang/Object;ILjava/lang/Object;II)V" )
     static native void arraycopy();
 
     /**
@@ -95,13 +96,11 @@ class ReplacementForSystem {
                     + "o[1]=h=Math.round((Math.random()-0.5)*0xffff);" //
                     + "}" // 
                     + "return h}" )
-    @Replace( "java/lang/System.identityHashCode(Ljava/lang/Object;)I" )
     static native int identityHashCode(Object x);
 
     /**
      * Replacement for {@link System#exit(int)}
      */
-    @Replace( "java/lang/System.exit(I)V" )
     public static void exit(int status) {
         // nothing
     }

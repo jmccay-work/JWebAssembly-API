@@ -75,4 +75,12 @@ class ReplacementForSecurityManager {
     public void checkAccess(ThreadGroup g) {
         // nothing
     }
+
+    /**
+     * Replacement for {@link SecurityManager#checkRead(String)}
+     */
+    @Replace( "java/lang/SecurityManager.checkRead(Ljava/lang/String;)V" )
+    public void checkRead(String file) {
+        // nothing
+    }
 }

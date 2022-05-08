@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 - 2020 Volker Berlin (i-net software)
+ * Copyright 2019 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation for a method that should replace a method of Java runtime. For example for a native method.
+ * Annotation for a method that should replace a single method of the Java runtime. For example for a native method.
+ * Also a complete class can be replaced
+ * <p>
+ * See also {@link Partial} for a more powerful solution.
  * 
  * @author Volker Berlin
  */
