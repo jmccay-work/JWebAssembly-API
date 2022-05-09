@@ -20,7 +20,7 @@ import de.inetsoftware.jwebassembly.web.DOMString;
 import de.inetsoftware.jwebassembly.web.JSObject;
 
 /**
- * https://developer.mozilla.org/en-US/docs/Web/API/Window
+ * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window">https://developer.mozilla.org/en-US/docs/Web/API/Window</a>
  * 
  * @author Volker Berlin
  */
@@ -51,12 +51,21 @@ public abstract class Window extends JSObject {
     private static native <T> T win_invoke0( DOMString methodName, Object param1 );
 
     /**
-     * https://developer.mozilla.org/en-US/docs/Web/API/Window/document
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/document">https://developer.mozilla.org/en-US/docs/Web/API/Window/document</a>
      * 
      * @return the document
      */
     public static Document document() {
         return new Document( win_get( "document" ) );
+    }
+
+    /**
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator">https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator</a>
+     * 
+     * @return the navigator
+     */
+    public static Navigator navigator() {
+        return new Navigator( win_get( "navigator" ) );
     }
 
     /**
