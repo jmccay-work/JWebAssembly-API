@@ -85,7 +85,7 @@ class ReplacementForSystem {
                     "for (var i=length-1;i>=0;i--)dest[i+destPos]=src[i+srcPos];" + //
                     "}" + //
                     "}" )
-    static native void arraycopy();
+    static native void arraycopy( Object src, int srcPos, Object dest, int destPos, int length );
 
     /**
      * Replacement for {@link System#identityHashCode(Object)}
