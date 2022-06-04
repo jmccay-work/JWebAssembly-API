@@ -15,6 +15,8 @@
  */
 package de.inetsoftware.jwebassembly.api.java.security;
 
+import java.security.ProtectionDomain;
+
 import de.inetsoftware.jwebassembly.api.annotation.Replace;
 
 /**
@@ -25,4 +27,11 @@ import de.inetsoftware.jwebassembly.api.annotation.Replace;
 @Replace( "java/security/AccessControlContext" )
 class ReplacementForAccessControlContext {
 
+    ReplacementForAccessControlContext() {
+
+    }
+
+    ReplacementForAccessControlContext( ProtectionDomain context[] ) {
+
+    }
 }
