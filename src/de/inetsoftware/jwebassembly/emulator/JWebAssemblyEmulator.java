@@ -235,7 +235,7 @@ public class JWebAssemblyEmulator {
      * @param <E> any Throwable
      * @throws E any Throwable
      */
-    static <E extends Throwable> E throwAny( Throwable e ) throws E {
+    static <E extends Throwable> RuntimeException throwAny( Throwable e ) throws E {
         throw (E)e;
     }
 
@@ -414,6 +414,15 @@ public class JWebAssemblyEmulator {
         /**
          * The callback. The parameter count must match the declaration in JavaScript
          * @param methodName the method name that is called
+         * @param arg1 optional argument
+         * @param arg2 optional argument
+         * @param arg3 optional argument
+         * @param arg4 optional argument
+         * @param arg5 optional argument
+         * @param arg6 optional argument
+         * @param arg7 optional argument
+         * @param arg8 optional argument
+         * @throws Exception forward any error to the caller
          */
         public void callback( String methodName, Object arg1, Object arg2, Object arg3, Object arg4, Object arg5, Object arg6, Object arg7, Object arg8 ) throws Exception {
             System.err.println( methodName + " " + arg1 + " " + arg2 + " " + arg3);

@@ -27,7 +27,6 @@ import de.inetsoftware.jwebassembly.web.JSObject;
 public class CSSStyleDeclaration extends JSObject {
 
     /**
-     * @hidden
      * @param peer the native JavaScript object
      */
     public CSSStyleDeclaration( Object peer ) {
