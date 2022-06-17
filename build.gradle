@@ -70,11 +70,12 @@ def getJavaFxPlatform() {
 * The Javafx version that is compatible with the current JDK
 */
 def getJavaFxVersion() {
-    def fxVersion = org.gradle.util.VersionNumber.parse( System.properties['java.version'] ).getMajor()
+    def fxVersion = JavaVersion.current().getMajorVersion() as int
     if( fxVersion > 8 && fxVersion < 11 ) {
         // There is no version 9 and 10, version 8 is build into the OpenJDK
         fxVersion = 11
     }
+    println 'fxVersion: ' + fxVersion
     return fxVersion;
 }
 
