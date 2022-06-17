@@ -47,7 +47,7 @@ public class ReplacementForNetworkInterface {
      * Replacement for NetworkInterface.getByName(String)
      */
     @Replace( "java/net/NetworkInterface.getByName(Ljava/lang/String;)Ljava/net/NetworkInterface;" )
-    public static NetworkInterface getByName(String name) {
+    private static NetworkInterface getByName(String name) {
         return null;
     }
 

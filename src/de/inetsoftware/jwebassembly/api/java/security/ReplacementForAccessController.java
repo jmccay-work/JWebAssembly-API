@@ -88,7 +88,7 @@ public class ReplacementForAccessController {
      * Replacement for getInheritedAccessControlContext().
      */
     @Replace( "java/security/AccessController.checkPermission(Ljava/security/Permission;)V" )
-    public static void checkPermission(Permission perm) {
+    private static void checkPermission(Permission perm) {
         // nothing, there is no security check in WASM
     }
 
@@ -96,7 +96,7 @@ public class ReplacementForAccessController {
      * Replacement for getContext().
      */
     @Replace( "java/security/AccessController.getContext()Ljava/security/AccessControlContext;" )
-    public static ReplacementForAccessControlContext getContext() {
+    private static ReplacementForAccessControlContext getContext() {
         return new ReplacementForAccessControlContext();
     }
 }
