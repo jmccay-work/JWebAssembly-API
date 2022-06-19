@@ -67,4 +67,12 @@ class ReplacementForClassLoader {
     public static ClassLoader getSystemClassLoader() {
         return null;
     }
+
+    /**
+     * Replacement for loadClass(String,boolean);
+     */
+    @Replace( "java/lang/ClassLoader.loadClass(Ljava/lang/String;Z)Ljava/lang/Class;" )
+    Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
+        return Class.forName( name, resolve, null );
+    }
 }
