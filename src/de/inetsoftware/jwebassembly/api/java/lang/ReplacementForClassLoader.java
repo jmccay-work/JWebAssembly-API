@@ -75,4 +75,12 @@ class ReplacementForClassLoader {
     Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
         return Class.forName( name, resolve, null );
     }
+
+    /**
+     * Replacement for registerAsParallelCapable();
+     */
+    @Replace( "java/lang/ClassLoader.registerAsParallelCapable()Z" )
+    static boolean registerAsParallelCapable() {
+        return false;
+    }
 }
