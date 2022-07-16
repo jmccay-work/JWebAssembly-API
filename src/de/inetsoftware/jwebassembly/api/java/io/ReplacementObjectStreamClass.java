@@ -1,0 +1,45 @@
+/*
+ * Copyright 2022 Volker Berlin (i-net software)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package de.inetsoftware.jwebassembly.api.java.io;
+
+import java.lang.reflect.Constructor;
+import java.security.ProtectionDomain;
+
+import de.inetsoftware.jwebassembly.api.annotation.Replace;
+
+/**
+ * Replacement methods for the class java.io.ObjectStreamClass.
+ *
+ * @author Volker Berlin
+ */
+public class ReplacementObjectStreamClass {
+
+    /**
+     * Replacement for getProtectionDomains(...).
+     */
+    @Replace( "java/io/ObjectStreamClass.getProtectionDomains(Ljava/lang/reflect/Constructor;Ljava/lang/Class;)[Ljava/security/ProtectionDomain;" )
+    private ProtectionDomain[] getProtectionDomains( Constructor<?> cons, Class<?> cl ) {
+        return null;
+    }
+
+    /**
+     * Replacement for computeDefaultSUID(Class).
+     */
+    @Replace( "java/io/ObjectStreamClass.computeDefaultSUID(Ljava/lang/Class;)J" )
+    private static long computeDefaultSUID( Class<?> cl ) {
+        return 0;
+    }
+}
