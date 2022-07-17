@@ -22,7 +22,7 @@ import de.inetsoftware.jwebassembly.api.annotation.Replace;
  *
  * @author Volker Berlin
  */
-class ReplacementReflectUtil {
+class ReplacementForReflectUtil {
 
     /**
      * Replacement for ensureMemberAccess.
