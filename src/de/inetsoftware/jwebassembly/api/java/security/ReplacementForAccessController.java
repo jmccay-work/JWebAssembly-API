@@ -49,6 +49,14 @@ public class ReplacementForAccessController {
     /**
      * Replacement for doPrivileged().
      */
+    @Replace( "java/security/AccessController.doPrivileged(Ljava/security/PrivilegedAction;Ljava/security/AccessControlContext;[Ljava/security/Permission;)Ljava/lang/Object;" )
+    static <T> T doPrivileged( PrivilegedAction<T> action, AccessControlContext context, Permission... perms ) {
+        return doPrivileged( action );
+    }
+
+    /**
+     * Replacement for doPrivileged().
+     */
     @Replace( "java/security/AccessController.doPrivileged(Ljava/security/PrivilegedExceptionAction;)Ljava/lang/Object;" )
     private static <T> T doPrivileged( PrivilegedExceptionAction<T> action ) throws PrivilegedActionException {
         try {
