@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Volker Berlin (i-net software)
+ * Copyright 2021 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package de.inetsoftware.jwebassembly.api.java.util.concurrent;
 
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -35,5 +37,13 @@ public class ReplacementForConcurrentHashMap<K,V> extends HashMap<K, V> implemen
 
     public ReplacementForConcurrentHashMap(int initialCapacity, float loadFactor, int concurrencyLevel) {
         super( initialCapacity, loadFactor );
+    }
+
+    public Enumeration<K> keys() {
+        return Collections.enumeration( keySet() );
+    }
+
+    public Enumeration<V> elements() {
+        return Collections.enumeration( values() );
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 - 2022 Volker Berlin (i-net software)
+ * Copyright 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,30 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.inetsoftware.jwebassembly.api.java.security;
+package de.inetsoftware.jwebassembly.api.java.nio.file;
+
+import java.nio.file.FileSystem;
 
 import de.inetsoftware.jwebassembly.api.annotation.Replace;
+import de.inetsoftware.jwebassembly.api.annotation.WasmTextCode;
 
 /**
- * Replacement methods for the class java.security.ProtectionDomain.
+ * Replacement methods for the class java.nio.file.FileSystems.
  *
  * @author Volker Berlin
  */
-class ReplacementForProtectionDomain {
+public class ReplacementForFileSystems {
 
     /**
-     * Replacement for static code.
+     * Replacement for getDefault().
      */
-    @Replace( "java/security/ProtectionDomain.<clinit>()V" )
-    private static void clinit() {
-        // nothing
-    }
-
-    /**
-     * Replacement for toString().
-     */
-    @Replace( "java/security/ProtectionDomain.toString()Ljava/lang/String;" )
-    public String toString() {
-        return super.toString();
-    }
+    @Replace( "java/nio/file/FileSystems.getDefault()Ljava/nio/file/FileSystem;" )
+    @WasmTextCode( "unreachable" )
+    static native FileSystem getDefault();
 }
