@@ -83,4 +83,12 @@ class ReplacementForClassLoader {
     static boolean registerAsParallelCapable() {
         return false;
     }
+
+    /**
+     * Replacement for findLoadedClass(String);
+     */
+    @Replace( "java/lang/ClassLoader.findLoadedClass(Ljava/lang/String;)Ljava/lang/Class;" )
+    Class<?> findLoadedClass(String name) {
+        return null;
+    }
 }

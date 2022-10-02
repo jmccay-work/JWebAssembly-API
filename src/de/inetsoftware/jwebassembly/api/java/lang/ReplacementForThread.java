@@ -75,4 +75,20 @@ class ReplacementForThread {
     static void interrupt0( Thread THIS ) {
         // nothing
     }
+
+    /**
+     * Replacement for interrupt0().
+     */
+    @Replace( "java/lang/Thread.isInterrupted(Z)Z" )
+    boolean isInterrupted(boolean ClearInterrupted) {
+        return false;
+    }
+
+    /**
+     * Replacement for interrupt0().
+     */
+    @Replace( "java/lang/Thread.start()V" )
+    static void start() {
+        throw new UnsupportedOperationException();
+    }
 }

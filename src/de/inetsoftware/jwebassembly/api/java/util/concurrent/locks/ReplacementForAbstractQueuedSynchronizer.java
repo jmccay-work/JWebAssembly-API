@@ -13,38 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.inetsoftware.jwebassembly.api.jdk.internal.misc;
+package de.inetsoftware.jwebassembly.api.java.util.concurrent.locks;
 
 import de.inetsoftware.jwebassembly.api.annotation.Replace;
 
 /**
- * Replacement methods for the class jdk.internal.misc.VM.
+ * Replacement methods for the class java.util.concurrent.locks.AbstractQueuedSynchronizer.
  * 
  * @author Volker Berlin
  */
-public class ReplacementForVM {
+class ReplacementForAbstractQueuedSynchronizer {
 
     /**
-     * Replacement for {@link VM.initialize()}
+     * Replacement for static code.
      */
-    @Replace( "jdk/internal/misc/VM.initialize()V" )
-    private static void initialize() {
+    @Replace( "java/util/concurrent/locks/AbstractQueuedSynchronizer.<clinit>()V" )
+    private static void init() {
         // nothing
-    }
-
-    /**
-     * Replacement for {@link VM.initialize()}
-     */
-    @Replace( "jdk/internal/misc/VM.initializeFromArchive(Ljava/lang/Class;)V" )
-    static void initializeFromArchive( Class<?> c ) {
-        // nothing
-    }
-
-    /**
-     * Replacement for {@link VM.getNanoTimeAdjustment()}
-     */
-    @Replace( "jdk/internal/misc/VM.getNanoTimeAdjustment(J)J" )
-    static long getNanoTimeAdjustment(long offsetInSeconds) {
-        return 0;
     }
 }
