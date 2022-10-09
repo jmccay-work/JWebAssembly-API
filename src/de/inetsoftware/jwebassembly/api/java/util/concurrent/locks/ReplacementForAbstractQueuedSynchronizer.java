@@ -31,4 +31,52 @@ class ReplacementForAbstractQueuedSynchronizer {
     private static void init() {
         // nothing
     }
+
+    /**
+     * Replacement for AbstractQueuedSynchronizer.addWaiter(Node).
+     */
+    @Replace( "java/util/concurrent/locks/AbstractQueuedSynchronizer.compareAndSetState(II)Z" )
+    boolean compareAndSetState(int expect, int update) {
+        return true;
+    }
+
+    /**
+     * Replacement for AbstractQueuedSynchronizer.addWaiter(Node).
+     */
+    @Replace( "java/util/concurrent/locks/AbstractQueuedSynchronizer.addWaiter(Ljava/util/concurrent/locks/AbstractQueuedSynchronizer$Node;)Ljava/util/concurrent/locks/AbstractQueuedSynchronizer$Node;" )
+    private Object addWaiter(Object mode) {
+        return mode;
+    }
+
+    /**
+     * Replacement for AbstractQueuedSynchronizer.unparkSuccessor(Node).
+     */
+    @Replace( "java/util/concurrent/locks/AbstractQueuedSynchronizer.unparkSuccessor(Ljava/util/concurrent/locks/AbstractQueuedSynchronizer$Node;)V" )
+    private void unparkSuccessor(Object node) {
+        //nothing
+    }
+
+    /**
+     * Replacement for AbstractQueuedSynchronizer.hasQueuedThreads().
+     */
+    @Replace( "java/util/concurrent/locks/AbstractQueuedSynchronizer.shouldParkAfterFailedAcquire(Ljava/util/concurrent/locks/AbstractQueuedSynchronizer$Node;Ljava/util/concurrent/locks/AbstractQueuedSynchronizer$Node;)Z" )
+    private static boolean shouldParkAfterFailedAcquire(Object pred, Object node) {
+        return false;
+    }
+
+    /**
+     * Replacement for AbstractQueuedSynchronizer.acquireQueued(node,int).
+     */
+    @Replace( "java/util/concurrent/locks/AbstractQueuedSynchronizer.cancelAcquire(Ljava/util/concurrent/locks/AbstractQueuedSynchronizer$Node;)V" )
+    boolean acquireQueued(final Object node, int arg) {
+        return false;
+    }
+
+    /**
+     * Replacement for AbstractQueuedSynchronizer.hasQueuedThreads().
+     */
+    @Replace( "java/util/concurrent/locks/AbstractQueuedSynchronizer.hasQueuedThreads()Z" )
+    boolean hasQueuedThreads() {
+        return false;
+    }
 }
