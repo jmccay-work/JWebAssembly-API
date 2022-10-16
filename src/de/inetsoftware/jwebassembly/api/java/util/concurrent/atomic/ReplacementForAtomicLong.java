@@ -29,6 +29,11 @@ import de.inetsoftware.jwebassembly.api.annotation.Replace;
 @Replace( "java/util/concurrent/atomic/AtomicLong" )
 public class ReplacementForAtomicLong extends Number implements java.io.Serializable {
 
+    @Replace( "java/util/concurrent/atomic/AtomicLong.VMSupportsCS8()Z" )
+    private static boolean VMSupportsCS8() {
+        return true;
+    }
+
     private volatile long value;
 
     public ReplacementForAtomicLong( long initialValue ) {
