@@ -240,3 +240,4 @@ signing {
         System.setProperty('org.gradle.internal.publish.checksums.insecure', 'true' )
     }
 }
+
