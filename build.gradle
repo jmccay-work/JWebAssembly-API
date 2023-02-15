@@ -1,14 +1,23 @@
-
-
+//https://ant.apache.org/manual/api/org/apache/tools/ant/taskdefs/condition/Os.html
+import org.apache.tools.ant.taskdefs.condition.Os 
 plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
 }
 
+//
+// Allow a developer building their own version the ability to add their own appendix.
+// Set theAppendix in gradle.properties in the root directory.
+String archivePreferredName = null;
+if (project.hasProperty('theAppendix') && theAppendix.length() > 0) {
+    archivePreferredName = String.format("%s-%s", archivesBaseName, "$theAppendix")
+} else {
+    archivePreferredName = archivesBaseName
+}
 group 'de.inetsoftware'
 archivesBaseName = 'jwebassembly-api'
-version = '0.4'
+version = '0.4.3'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -27,6 +36,7 @@ dependencies {
         def platform = getJavaFxPlatform()
         def modules = ['javafx-base', 'javafx-controls', 'javafx-graphics', 'javafx-media', 'javafx-web' ]
         for (String module : modules) {
+            //TODO: change to String.format
             compileOnly 'org.openjfx:' + module + ':' + fxVersion + '.+:' + platform
             testImplementation 'org.openjfx:' + module + ':' + fxVersion + '.+:' + platform
         }
@@ -56,8 +66,8 @@ sourceSets {
 }
 
 /**
-* The String for Javafx classifier
-*/
+ * The String for Javafx classifier
+ */
 def getJavaFxPlatform() {
     def osname = System.properties['os.name'].toLowerCase()
     if( osname.contains( 'windows' ) ) {
@@ -69,8 +79,8 @@ def getJavaFxPlatform() {
 }
 
 /**
-* The Javafx version that is compatible with the current JDK
-*/
+ * The Javafx version that is compatible with the current JDK
+ */
 def getJavaFxVersion() {
     def fxVersion = JavaVersion.current().getMajorVersion() as int
     if( fxVersion > 8 && fxVersion < 11 ) {
@@ -82,26 +92,61 @@ def getJavaFxVersion() {
 }
 
 jar {
+    archiveAppendix.set("$theAppendix")
     manifest {
         attributes( 'Specification-Title': 'JWebAssembly-API',
                     'Specification-Vendor': 'i-net software',
-                    'Specification-Version': version,
+                    'Specification-Version': archiveVersion,
+//                    'Specification-Version': version,
                     'Implementation-Title': 'JWebAssembly-API',
                     'Implementation-Vendor': 'i-net software',
-                    'Implementation-Version': version,
+                    'Implementation-Version': archiveVersion,
+//                    'Implementation-Version': version,
                     'Premain-Class': 'de.inetsoftware.jwebassembly.emulator.PremainEmulator',
         )
     }
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
+    archiveBaseName=archivesBaseName
+    archiveAppendix.set("$theAppendix")
     classifier = 'sources'
     from sourceSets.main.java
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
+    archiveBaseName=archivesBaseName
+    archiveAppendix.set("$theAppendix")
     classifier = 'javadoc'
     from javadoc.destinationDir
+}
+
+// source: https://stackoverflow.com/questions/11235614/how-to-detect-the-current-os-from-gradle
+// needs: import org.apache.tools.ant.taskdefs.condition.Os
+// check the OS type
+task checkWin() {
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        println "*** Windows OS"
+    } else if (Os.isFamily(Os.FAMILY_MAC)) {
+        println "*** Mac OS"
+    } else if ( Os.isFamily(Os.FAMILY_UNIX) ) {
+        println "*** Unix OS"
+    } else {
+        println "*** Other OS"
+    }
+}
+
+// task to list dprecated stuff in the compile
+tasks.withType(JavaCompile) {
+    options.deprecation = true
+    options.compilerArgs += ['-Xlint:deprecation']
+    options.compilerArgs += ['-Xlint:unchecked']
+}
+
+tasks.withType(PublishToMavenRepository) {
+    doFirst {
+        println("Publishing ${publication.groupId}:${publication.artifactId}:${publication.version} to ${repository.url}")
+    }
 }
 
 build {
@@ -134,7 +179,7 @@ publishing {
             from components.java
             artifact sourcesJar
             artifact javadocJar
-            artifactId archivesBaseName
+            artifactId archivePreferredName
             pom {
                 name = 'JWebAssembly-API'
                 description = 'The API for using WebAssembly features in your Java classes.'
@@ -177,7 +222,7 @@ publishing {
 
 signing {
     if (project.hasProperty("signing.keyId") ){
-       sign publishing.publications.JWebAssemblyApi
+        sign publishing.publications.JWebAssemblyApi
 
         // does not create sha256 and sha512 checksums
         System.setProperty('org.gradle.internal.publish.checksums.insecure', 'true' )

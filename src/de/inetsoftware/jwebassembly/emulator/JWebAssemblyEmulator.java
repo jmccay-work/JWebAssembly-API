@@ -37,7 +37,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -65,6 +64,7 @@ public class JWebAssemblyEmulator {
      * @param args
      *            the class and method that should be called
      */
+    @SuppressWarnings("CallToPrintStackTrace")
     public static void main( String[] args ) {
         if( args.length >= 2 ) {
             try {
@@ -173,6 +173,7 @@ public class JWebAssemblyEmulator {
      * @param main
      *            the executable with the main function
      */
+    @SuppressWarnings("SleepWhileInLoop")
     private static void launch( String htmlPageURL, String content, @Nonnull Callable<?> main ) {
         JavaFxApplication.url = htmlPageURL;
         JavaFxApplication.content = content;
@@ -182,6 +183,7 @@ public class JWebAssemblyEmulator {
         if( JavaFxApplication.stage == null ) {
             //we start a new thread because JavaFX is blocking
             Thread thread = new Thread() {
+                @Override
                 public void run() {
                     try {
                         JavaFxApplication.launch( JavaFxApplication.class, new String[0] );
@@ -235,6 +237,7 @@ public class JWebAssemblyEmulator {
      * @param <E> any Throwable
      * @throws E any Throwable
      */
+    @SuppressWarnings("unchecked")
     static <E extends Throwable> RuntimeException throwAny( Throwable e ) throws E {
         throw (E)e;
     }
@@ -352,6 +355,7 @@ public class JWebAssemblyEmulator {
         /**
          * Load the page and run the start method
          */
+        @SuppressWarnings("CallToPrintStackTrace")
         public static void execute() {
             // Create a WebView
             WebView browser = new WebView();
@@ -381,7 +385,7 @@ public class JWebAssemblyEmulator {
                     }
                     try {
                         main.call();
-                    } catch( Throwable th ) {
+                    } catch( Exception th ) {
                         error = th;
                         th.printStackTrace();
                     }
@@ -453,14 +457,19 @@ public class JWebAssemblyEmulator {
             } else {
                 callbackMethod = (Method)callback;
             }
-            callbackMethod.setAccessible( true );
-            int paramCount = callbackMethod.getParameterTypes().length;
-            args = Arrays.copyOf( args, paramCount );
-            callbackMethod.invoke( null, args );
+            int paramCount;
+            if (null != callbackMethod) {
+                callbackMethod.setAccessible( true );
+                paramCount = callbackMethod.getParameterTypes().length;
+                args = Arrays.copyOf( args, paramCount );
+                callbackMethod.invoke( null, args );
+            } else {
+                System.out.println(String.format("Skipping calling %s because no callback method found.",methodName));
+            }
         }
     }
 
-    private static CallbackHandler callbackHandler = new CallbackHandler();
+    private static final CallbackHandler callbackHandler = new CallbackHandler();
 
-    private static HashMap<String,Object> callbacks = new HashMap<>();
+    private static final HashMap<String,Object> callbacks = new HashMap<>();
 }
