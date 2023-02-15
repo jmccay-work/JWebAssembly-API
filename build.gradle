@@ -6,6 +6,20 @@ plugins {
     id 'signing'
 }
 
+// Allow people to developers who build their own to put in a private/company script to
+// load the custom maven publishing repository
+// Set localRepositoryScript in gradle.properties.
+if (project.hasProperty('localRepositoryScript') && localRepositoryScript.length() > 0) {
+    File repScript = new File("$localRepositoryScript")
+    if (repScript.exists()) {
+        apply from: "$localRepositoryScript"
+    }
+}
+
+group 'de.inetsoftware'
+version = '0.4.3'
+archivesBaseName = 'jwebassembly-api'
+
 //
 // Allow a developer building their own version the ability to add their own appendix.
 // Set theAppendix in gradle.properties in the root directory.
@@ -15,9 +29,6 @@ if (project.hasProperty('theAppendix') && theAppendix.length() > 0) {
 } else {
     archivePreferredName = archivesBaseName
 }
-group 'de.inetsoftware'
-archivesBaseName = 'jwebassembly-api'
-version = '0.4.3'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -108,14 +119,14 @@ jar {
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    archiveBaseName=archivesBaseName
+    archiveBaseName=archivePreferredName
     archiveAppendix.set("$theAppendix")
     classifier = 'sources'
     from sourceSets.main.java
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    archiveBaseName=archivesBaseName
+    archiveBaseName=archivePreferredName
     archiveAppendix.set("$theAppendix")
     classifier = 'javadoc'
     from javadoc.destinationDir
@@ -124,7 +135,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 // source: https://stackoverflow.com/questions/11235614/how-to-detect-the-current-os-from-gradle
 // needs: import org.apache.tools.ant.taskdefs.condition.Os
 // check the OS type
-task checkWin() {
+task checkOS() {
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
         println "*** Windows OS"
     } else if (Os.isFamily(Os.FAMILY_MAC)) {
@@ -209,6 +220,7 @@ publishing {
     }
     repositories {
         maven {
+            name 'PublicSonatype'
             url 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
             if (project.hasProperty("ossrhUsername") ) {
                 credentials {
