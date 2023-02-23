@@ -53,6 +53,8 @@ public class ReplacementForNetworkInterface {
 
     /**
      * Replacement for NetworkInterface.getByIndex(int)
+     * @param index
+     * @return 
      */
     @Replace( "java/net/NetworkInterface.getByIndex(I)Ljava/net/NetworkInterface;" )
     public static NetworkInterface getByIndex(int index) {
