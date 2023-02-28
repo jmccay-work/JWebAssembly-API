@@ -30,7 +30,7 @@ if (project.hasProperty('localRepositoryScript') && localRepositoryScript.length
 }
 
 group 'de.inetsoftware'
-version = '0.4.8'
+version = '0.4.0009'
 archivesBaseName = 'jwebassembly-api'
 
 //
