@@ -210,6 +210,7 @@ public class JSObject {
      *            the Java string
      * @return dom string
      */
+    @SuppressWarnings("Convert2Lambda")
     public static DOMString domString( @Nonnull String str ) {
         // in pure we return simple the string
         // in wasm code this method should be replaced
