@@ -71,6 +71,9 @@ dependencies {
 }
 
 sourceSets {
+    main
+    test
+/*
     main {
         java {
             srcDir 'src/main/java'
@@ -87,6 +90,7 @@ sourceSets {
             srcDir 'src/test/resources'
         }
     }
+*/
 }
 
 /**
@@ -133,7 +137,7 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     archiveBaseName=archivesBaseName
     archiveAppendix.set("$theAppendix")
     classifier = 'sources'
-    from sourceSets.main.java
+    from sourceSets.main.allJava
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
@@ -158,15 +162,13 @@ tasks.register("checkOS") {
     }
 }
 
-build {
-    dependsOn sourcesJar
-    dependsOn javadocJar
-}
+
 
 artifacts {
     archives sourcesJar
     archives javadocJar
 }
+
 
 test {
     dependsOn 'jar'
@@ -189,10 +191,9 @@ publishing {
 
             artifactId archivePreferredName
 
-            artifact(tasks.named("sourcesJar").get())
-            artifact(tasks.named("javadocJar").get())
+            artifact sourcesJar
+            artifact javadocJar
             pom {
-//                name = 'JWebAssembly-API'
                 name = archivePreferredName
                 description = 'The API for using WebAssembly features in your Java classes.'
                 url = 'https://github.com/i-net-software/JWebAssembly-API'
@@ -218,6 +219,7 @@ publishing {
                 }
             }
         }
+
         JWebAssemblyApi(MavenPublication) {
             from components.java
             artifact sourcesJar
@@ -252,17 +254,6 @@ publishing {
     }
     repositories {
         mavenLocal()
-/* moved to gradle script file
-        // Store the entire generated libraries to a directory named by the project name
-        // in the directory specified in the localRepositoryLocation property in the
-        // gradle properties file in the root directory.
-        if (project.hasProperty('localRepositoryLocation') && project.localRepositoryLocation.length() > 0) {
-            maven {
-                name 'local'
-                url String.format("%s", localRepositoryLocation)
-            }
-        }
-*/
         maven {
             name 'PublicSonatype'
             url 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
